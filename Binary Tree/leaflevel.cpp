@@ -1,12 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Tree Node
 struct Node
 {
     int data;
-    struct Node *left;
-    struct Node *right;
+    Node* left;
+    Node* right;
 };
+
 // Utility function to create a new Tree Node
 Node* newNode(int val)
 {
@@ -17,6 +19,7 @@ Node* newNode(int val)
     
     return temp;
 }
+
 // Function to Build Tree
 Node* buildTree(string str)
 {   
@@ -80,43 +83,60 @@ Node* buildTree(string str)
     
     return root;
 }
-void inorder(Node * node)
+
+
+ // } Driver Code Ends
+/* The structure of the binary tree is as follows
+struct Node
 {
-    if(node==NULL)
-        return;
+    int data;
+    Node* left;
+    Node* right;
+};
+*/
+
+class Solution{
+  public:
+    /*You are required to complete this method*/
+    bool check(Node *root)
+    {
+        int level =0;int treeLevel=0;
+        return checkUtil(root, level, &treeLevel);
+        
+    }
+    bool checkUtil(Node* root, int level, int *treeLevel){
+        if(!root) return true;
+        
+        if(root->left==NULL && root->right==NULL){
+            if(*treeLevel == 0){
+                *treeLevel = level;
+                 return true;
+            }
+            
+            return (level == *treeLevel);
+            
+        }
+        
+        return checkUtil(root->left, level+1, treeLevel) && checkUtil(root->right, level+1, treeLevel);
+    }
     
-    inorder(node->left);
-    cout<<node->data<<" ";
-    inorder(node->right);
-}
-void toSumTree(Node *node);
+};
+
+// { Driver Code Starts.
+// Driver program to test size function
 int main()
 {
-
     int t;
-	scanf("%d ",&t);
-    while(t--)
+    cin>> t;
+    getchar();
+    while (t--)
     {
         string s;
-		getline(cin,s);
-        Node* root = buildTree(s);
-        toSumTree(root);
-        inorder(root);
-        cout<<endl;
+        getline( cin, s );
+        Node* head = buildTree( s );
+        Solution obj;
+        cout << obj.check(head) << endl;
     }
-    return 1;
-}
-void toSumTree(Node *node)
-{
-    
-    if(!node)
-        return 0;
-    int s = node->data;
-    
-    if(node->data =toSumTree(node->left)+toSumTree(node->right))
-          return 1;
-       
     return 0;
-    
 }
-
+  // } Driver Code Ends

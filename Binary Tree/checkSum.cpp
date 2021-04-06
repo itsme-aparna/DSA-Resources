@@ -89,7 +89,7 @@ void inorder(Node * node)
     cout<<node->data<<" ";
     inorder(node->right);
 }
-void toSumTree(Node *node);
+void checkSum(Node *node);
 int main()
 {
 
@@ -106,17 +106,17 @@ int main()
     }
     return 1;
 }
-void toSumTree(Node *node)
-{
-    
-    if(!node)
-        return 0;
-    int s = node->data;
-    
-    if(node->data =toSumTree(node->left)+toSumTree(node->right))
-          return 1;
-       
-    return 0;
-    
-}
 
+int Sum(Node* node){
+    if(!node)
+       return 0;
+    return Sum(node->right)+ Sum(node->left)+node->data;
+}
+bool checkSum(Node* node){
+     if(!node || node->right || node->left)
+        return true;
+     if((node->data==Sum(node->right)+Sum(node->left))&& checkSum(node->right)&& checkSum(node->left)){
+         return true;
+     }
+     return false;
+}
