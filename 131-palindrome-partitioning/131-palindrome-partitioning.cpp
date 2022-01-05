@@ -7,7 +7,7 @@ public:
         return pars;
     }
 private: 
-    void partition(string s, int start, vector<string>& par, vector<vector<string>>& pars) {
+    void partition(string& s, int start, vector<string>& par, vector<vector<string>>& pars) {
         int n = s.length();
         if (start == n) {
             pars.push_back(par);
@@ -22,7 +22,7 @@ private:
         }
     }
     
-    bool isPalindrome(string s, int l, int r) {
+    bool isPalindrome(string& s, int l, int r) {
         while (l < r) {
             if (s[l++] != s[r--]) {
                 return false;
