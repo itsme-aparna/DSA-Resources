@@ -1,35 +1,57 @@
 class Solution {
 public:
+    bool isValid(int x, int y, vector<vector<int>>& grid){
+        int n = grid.size();
+        int m = grid[0].size();
+        if(x<0 || x>=n || y<0 || y>=m){
+            return false;
+        }
+        return true;
+    }
     int orangesRotting(vector<vector<int>>& grid) {
-        if(grid.empty()) return 0;
-        int m = grid.size(), n = grid[0].size(), days = 0, tot = 0, cnt = 0;
-        queue<pair<int, int>> rotten;
-        for(int i = 0; i < m; ++i){
-            for(int j = 0; j < n; ++j){
-                if(grid[i][j] != 0) tot++;
-                if(grid[i][j] == 2) rotten.push({i, j});
+        int n = grid.size();
+        int m = grid[0].size();
+        int fresh=0;
+        int rotten = 0;
+        int day=0;
+        queue<pair<int, int>> q;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m ; j++){
+                if(grid[i][j]==1){
+                    fresh++;
+                }
+                if(grid[i][j] == 2){ 
+                    rotten++;
+                    q.push({i, j});
+                }
+                
             }
         }
+        int dx[4] = {1, -1, 0, 0};
+        int dy[4] = {0, 0, 1, -1};
         
-        int dx[4] = {0, 0, 1, -1};
-        int dy[4] = {1, -1, 0, 0};
-        
-        while(!rotten.empty()){
-            int k = rotten.size();
-            cnt += k; 
-            while(k--){
-                int x = rotten.front().first, y = rotten.front().second;
-                rotten.pop();
-                for(int i = 0; i < 4; ++i){
-                    int nx = x + dx[i], ny = y + dy[i];
-                    if(nx < 0 || ny < 0 || nx >= m || ny >= n || grid[nx][ny] != 1) continue;
-                    grid[nx][ny] = 2;
-                    rotten.push({nx, ny});
+        while(!q.empty()){
+            
+            int size = q.size();
+            while(size--){
+                int x = q.front().first;
+                int y = q.front().second;
+                q.pop();
+                for(int i=0; i<4; i++){
+                if(isValid(x+dx[i], y+dy[i], grid)){
+                    if(grid[x+dx[i]][y+dy[i]]==1){
+                        fresh--;
+                        grid[x+dx[i]][y+dy[i]]=2;
+                        q.push({x+dx[i], y+dy[i]});
+                    }
                 }
             }
-            if(!rotten.empty()) days++;
+            }
+            if(!q.empty())
+             day++;
         }
-        
-        return tot == cnt ? days : -1;
+        if(fresh==0)
+            return day;
+        return -1;
     }
 };
