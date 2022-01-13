@@ -9,7 +9,7 @@ public:
         for(int i=0; i<nums.size(); i++){
             if(mp[nums[i]].size()>=2){
                 vector<int> v = mp[nums[i]];
-                sort(v.begin(), v.end());
+                
                 for(int j=1; j<v.size(); j++){
                     if(abs(v[j-1]-v[j])<=k){
                     return true;
