@@ -1,5 +1,6 @@
 class Solution {
 public:
+    
     bool isValid(int x, int y, vector<vector<int>>& grid){
         int n = grid.size();
         int m = grid[0].size();
@@ -8,50 +9,51 @@ public:
         }
         return true;
     }
+    
     int orangesRotting(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-        int fresh=0;
-        int rotten = 0;
-        int day=0;
+        int fresh = 0;
+        int ans = 0;
         queue<pair<int, int>> q;
         for(int i=0; i<n; i++){
-            for(int j=0; j<m ; j++){
+            for(int j =0; j<m ; j++){
                 if(grid[i][j]==1){
                     fresh++;
                 }
-                if(grid[i][j] == 2){ 
-                    rotten++;
+                else if(grid[i][j]==2){
                     q.push({i, j});
                 }
-                
             }
         }
-        int dx[4] = {1, -1, 0, 0};
-        int dy[4] = {0, 0, 1, -1};
+        
+        int dx[4] = {0, 0, 1, -1};
+        int dy[4] = {1, -1, 0, 0};
         
         while(!q.empty()){
-            
-            int size = q.size();
-            while(size--){
+            int len = q.size();
+            while(len--){
                 int x = q.front().first;
                 int y = q.front().second;
+            
                 q.pop();
                 for(int i=0; i<4; i++){
-                if(isValid(x+dx[i], y+dy[i], grid)){
-                    if(grid[x+dx[i]][y+dy[i]]==1){
+                    int nx = x+dx[i];
+                    int ny = y+dy[i];
+                    if((isValid(x+dx[i], y+dy[i], grid)) && grid[nx][ny]==1){
                         fresh--;
-                        grid[x+dx[i]][y+dy[i]]=2;
-                        q.push({x+dx[i], y+dy[i]});
+                        grid[nx][ny] = 2;
+                        q.push({nx, ny});
                     }
                 }
             }
+            
+            if(!q.empty()){
+                ans++;
             }
-            if(!q.empty())
-             day++;
         }
-        if(fresh==0)
-            return day;
+        if(fresh == 0)
+            return ans;
         return -1;
     }
 };
