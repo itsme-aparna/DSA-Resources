@@ -6,21 +6,42 @@ using namespace std;
 class Solution {
 public:
 
-    bool dfs(int src, vector<int> adj[], vector<int>&vis){
+//     bool dfs(int src, vector<int> adj[], vector<int>&vis){
 	        
-	        for(auto x: adj[src]){
-	            if(vis[x]==-1){
-	                vis[x] = 1-vis[src];
-	                if(!dfs(x, adj, vis)){
-	                    return false;
-	                }
-	            }
-	            else if(vis[x]==vis[src]){
-	                return false;
-	            }
-	        }
-	        return true;
-	}
+// 	        for(auto x: adj[src]){
+// 	            if(vis[x]==-1){
+// 	                vis[x] = 1-vis[src];
+// 	                if(!dfs(x, adj, vis)){
+// 	                    return false;
+// 	                }
+// 	            }
+// 	            else if(vis[x]==vis[src]){
+// 	                return false;
+// 	            }
+// 	        }
+// 	        return true;
+// 	}
+    
+    bool bfs(int src, vector<int> adj[], vector<int> &vis){
+        queue<int> q;
+        q.push(src);
+        vis[src] =  1;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            
+            for(auto i: adj[node]){
+                if(vis[i]==-1){
+                    vis[i] = 1-vis[node];
+                    q.push(i);
+                }
+                else if(vis[i] == vis[node]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
 	bool isBipartite(int V, vector<int>adj[]){
 	    //dfs
@@ -29,7 +50,7 @@ public:
 	    for(int i=0; i<V; i++){
 	        if(vis[i]==-1){
 	            vis[i] = 1;
-	            if(!dfs(i, adj, vis)){
+	            if(!bfs(i, adj, vis)){
 	                return false;
 	            }
 	        }
