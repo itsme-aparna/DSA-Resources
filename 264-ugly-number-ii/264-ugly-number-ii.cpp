@@ -1,15 +1,29 @@
 class Solution {
-    public int nthUglyNumber(int n) {
-  PriorityQueue<Long> pq = new PriorityQueue<>();
-  pq.add(1l);
-  for (int i = 0; i < n - 1; ++i) {
-    long val = pq.remove();
-    while (pq.size() > 0 && pq.peek() == val) pq.remove(); // remove duplicates
-    pq.add(val * 2);
-    pq.add(val * 3);
-    pq.add(val * 5);
-  }
-  // return (int) pq.remove();   // 
-  return pq.remove().intValue();
-}
-}
+public:
+    int nthUglyNumber(int n) {
+        vector<int> dp(n, 0);
+        dp[0] = 1;
+        int ptr2 = 0;
+        int ptr3 = 0;
+        int ptr5 = 0;
+        
+        for(int i=1; i<n; i++){
+            int val2 = dp[ptr2]*2;
+            int val3 = dp[ptr3]*3;
+            int val5 = dp[ptr5]*5;
+            
+            int mini = min(val2, min(val3, val5));
+            dp[i] = mini;
+            if(mini == val2){
+                ptr2++;
+            }
+            if(mini==val3)
+                ptr3++;
+            if(mini==val5)
+                ptr5++;
+            
+             
+        }
+        return dp[n-1];
+    }
+};
