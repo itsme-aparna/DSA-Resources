@@ -1,29 +1,33 @@
 class Solution {
 public:
-    
-    int minPathSum(vector<vector<int>>& grid, int x, int y, vector<vector<int>> &memo){
-        
-        if(x==0 && y==0){
-            return grid[x][y];
-        }
-        
-        else if(x<0 || y<0)
-            return INT_MAX;
-        
-        else if(memo[x][y]!=0){
-            return memo[x][y];
-        }
-        
-        int r = grid[x][y] + min(minPathSum(grid, x-1, y, memo), minPathSum(grid, x, y-1, memo));
-        memo[x][y] = r;
-        return r;
-    }
-    
     int minPathSum(vector<vector<int>>& grid) {
-        //try all paths
+        //tabulation
         int n = grid.size();
         int m = grid[0].size();
-        vector<vector<int>> memo(n, vector<int> (m,0));
-        return minPathSum(grid, n-1, m-1, memo);
+        vector<vector<int>> dp(n, vector<int> (m, 0));
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(i==0 && j==0)
+                    dp[i][j] = grid[i][j];
+                else{
+                    int up = grid[i][j] ;
+                    if(i>0){
+                        up += dp[i-1][j];
+                    }
+                    else{
+                        up += 1e9;
+                    }
+                    
+                    int left = grid[i][j] ;
+                    if(j>0){
+                        left += dp[i][j-1];
+                    }
+                    else
+                        left += 1e9;
+                    dp[i][j] = min(up, left);
+                }
+            }
+        }
+        return dp[n-1][m-1];
     }
 };
