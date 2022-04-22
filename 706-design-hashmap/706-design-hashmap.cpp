@@ -52,11 +52,8 @@ public:
     }
     
     void remove(int key) {
-        
         int k = calcHash(key);
-        
         auto it = l[k].begin();
-        
         while(it != l[k].end())
         {
             if(it->first == key)
