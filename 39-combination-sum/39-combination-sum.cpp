@@ -1,34 +1,39 @@
 class Solution {
 public:
-    void comb(vector<vector<int>> &ans, vector<int>& candidates, int target, int idx, vector<int> &ds){
-        if(idx==candidates.size()){
-            if(target==0){
-            ans.push_back(ds);
-            
-        }
+    
+    void func(vector<vector<int>> &ans, vector<int> &ds, vector<int>& candidates, int target, int sum, int idx, int n){
+        if(idx==n){
+            if(sum == target){
+                ans.push_back(ds);
+            }
             return;
         }
         
-        //pick and dont pick
+        //pick
         
-        
-        
-        //target>=candidates[idx]
-        if(target>=candidates[idx]){
-             ds.push_back(candidates[idx]);
-            
-            comb(ans, candidates, target-candidates[idx], idx, ds);
+        if(sum+candidates[idx] <=target){
+            sum+= candidates[idx];
+            ds.push_back(candidates[idx]);
+            func(ans, ds, candidates, target, sum, idx, n);
             ds.pop_back();
+            sum -= candidates[idx];
+            
         }
-        comb(ans, candidates, target, idx+1, ds);
+        
+        
+        
+        
+        //not pick
+        func(ans, ds, candidates, target, sum, idx+1, n);
+        
         
     }
     
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        // try all combinations
         vector<vector<int>> ans;
         vector<int> ds;
-        comb(ans, candidates, target, 0, ds);
+        int n = candidates.size();
+        func(ans, ds, candidates, target, 0, 0, n);
         return ans;
     }
 };
