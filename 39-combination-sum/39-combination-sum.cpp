@@ -3,7 +3,7 @@ public:
     
     void solve(vector<vector<int>>& ans, vector<int>& temp, vector<int>& candidates, int idx, int target, int sum, int n){
         
-        if(idx== n){
+        if(idx== n || sum == target){
             if(sum == target){
                 ans.push_back(temp);
             }
