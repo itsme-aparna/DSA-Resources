@@ -14,14 +14,14 @@ public:
     int widthOfBinaryTree(TreeNode* root) {
         if(root==NULL) return 0;
         int ans=0;
-        queue<pair<TreeNode*,int >>q;//{node,index}
+        queue<pair<TreeNode*,int >>q;
         q.push({root,0});
         while(!q.empty()){
              int size=q.size();
-             int mmin=q.front().second;//to make the index starting from zore
+             int mmin=q.front().second;
              int first,last;
             for(int i=0;i<size;i++){
-                int index=q.front().second -mmin;//-mmin for controling overflow cases
+                int index=q.front().second -mmin;
                 TreeNode * node=q.front().first;
                 q.pop();
                 if(i==0) first=index;
