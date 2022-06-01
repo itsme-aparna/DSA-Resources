@@ -1,22 +1,34 @@
 class Solution {
 public:
+    int findcnt(int n){
+        if(n ==0)
+            return 0;
+        int cnt = 0;
+        while(n){
+            if(n&1 == 1) break;
+            cnt++;
+            n = n>>1;
+        }
+        return cnt;
+    }
     vector<int> singleNumber(vector<int>& nums) {
         long long n = 0;
         for(int i=0; i<nums.size(); i++){
-            n = nums[i]^n;
+            n = n^nums[i];
         }
-        int mask = n & ~(n-1);
-        int xor1 = 0;
-        int xor2 = 0;
+        
+        // 
+        int cnt = findcnt(n);
+        int xor1 = 0, xor2 = 0;
         for(auto i: nums){
-            if(mask & i){
-                xor1 = xor1^i;
+            if(i & (1<<cnt)){
+                xor1 ^= i;
             }
             else{
-                xor2 = xor2^i;
+                xor2 ^= i;
             }
-            
         }
-        return {xor1,xor2};
+        
+        return {xor1, xor2};
     }
 };
