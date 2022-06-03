@@ -12,6 +12,6 @@ public:
             longest = max(longest, j);
         }
         return longest;
-       
-}
+        
+    }
 };
