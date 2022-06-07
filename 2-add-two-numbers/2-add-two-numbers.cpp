@@ -10,24 +10,26 @@
  */
 class Solution {
 public:
-	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-		ListNode *p1=l1,*p2=l2;
-		ListNode *dummy=new ListNode(-1),*t=dummy;
-		int carry=0;
-		while(p1 || p2 || carry){
-			if(p1) {
-				carry+=p1->val;
-				p1=p1->next;
-			}
-			if(p2) {
-				carry+=p2->val;
-				p2=p2->next;
-			}
-			ListNode *temp=new ListNode(carry%10);
-			t->next=temp;
-			t=temp;
-			carry/=10;
-		}
-		return dummy->next;
-	}
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dum = new ListNode(0);
+        ListNode* dummy = dum;
+        int carry = 0;
+        while(l1 || l2 || carry){
+            if(l1){
+                carry+= l1->val;
+                l1 = l1->next;
+            }
+            if(l2){
+                carry += l2->val;
+                l2 = l2->next;
+            }
+            
+            ListNode* node = new ListNode(carry%10);
+            dummy->next = node;
+            dummy = dummy->next;
+            carry /= 10;
+        }
+        
+        return dum->next;
+    }
 };
