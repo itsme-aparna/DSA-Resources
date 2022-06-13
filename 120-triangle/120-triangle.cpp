@@ -18,7 +18,7 @@ public:
             }
         }
         
-        int ans = INT_MAX;
+        int ans = vec[n-1][0];
         for(auto i: vec[n-1]){
             ans = min(ans, i);
         }
