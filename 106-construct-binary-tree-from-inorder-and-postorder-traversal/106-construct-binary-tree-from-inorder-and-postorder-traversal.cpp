@@ -25,12 +25,13 @@ public:
         
         node->right = solve(inorder, postorder, i+1, r, curr);
         node->left = solve(inorder, postorder, l, i-1, curr);
+        
         return node;
     }
     
+    
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         int n = inorder.size()-1;
-        
         return solve(inorder, postorder, 0, n, n);
     }
 };
