@@ -11,7 +11,6 @@
  */
 class Solution {
 public:
-    
     TreeNode* flattenTree(TreeNode* root){
         if(root==NULL) return NULL;
         if(root->left == NULL && !root->right){
