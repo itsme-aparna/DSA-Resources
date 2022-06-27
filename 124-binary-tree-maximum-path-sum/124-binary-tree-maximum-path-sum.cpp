@@ -11,21 +11,20 @@
  */
 class Solution {
 public:
-    
-    int solve(TreeNode* root, int &maxi){
+    int func(TreeNode* root, int &maxi){
         if(root==NULL)
             return 0;
-        int leftp = max(0, solve(root->left, maxi));
-        int rightp = max(0, solve(root->right, maxi));
         
-        maxi = max(maxi, (root->val+ leftp+ rightp));
-        
-        return max(leftp, rightp) + root->val;
+        int l = max(0, func(root->left, maxi));
+        int r = max(0, func(root->right, maxi));
+        int val = root->val;
+        maxi = max(maxi, (l + r) + val);
+        return max(l, r) + val;
     }
     
     int maxPathSum(TreeNode* root) {
         int maxi = INT_MIN;
-        solve(root, maxi);
+        func(root, maxi);
         return maxi;
     }
 };
