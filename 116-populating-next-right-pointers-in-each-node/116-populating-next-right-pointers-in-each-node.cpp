@@ -18,12 +18,11 @@ public:
 
 class Solution {
 public:
+    // initially all are NULL;
     Node* connect(Node* root) {
         Node* temp = root;
-        
-        while(temp !=NULL && temp->left !=NULL){
-            Node *n = temp;
-            
+        while(temp != NULL && temp->left != NULL){
+            Node* n = temp;
             while(true){
                 n->left->next = n->right;
                 if(n->next == NULL)
@@ -31,7 +30,6 @@ public:
                 n->right->next = n->next->left;
                 n = n->next;
             }
-            
             temp = temp->left;
         }
         return root;
