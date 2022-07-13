@@ -1,59 +1,62 @@
 class Solution {
 public:
-    
     bool isValid(int x, int y, vector<vector<int>>& grid){
         int n = grid.size();
         int m = grid[0].size();
-        if(x<0 || x>=n || y<0 || y>=m){
+        if(x<0 || x>=n || y<0 || y>= m || grid[x][y]==0){
             return false;
         }
         return true;
     }
     
+    
     int orangesRotting(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-        int fresh = 0;
-        int ans = 0;
         queue<pair<int, int>> q;
         for(int i=0; i<n; i++){
-            for(int j =0; j<m ; j++){
-                if(grid[i][j]==1){
-                    fresh++;
-                }
-                else if(grid[i][j]==2){
-                    q.push({i, j});
+            for(int j=0; j<m; j++){
+                if(grid[i][j]==2){
+                    q.push({i,j});
                 }
             }
         }
-        
-        int dx[4] = {0, 0, 1, -1};
-        int dy[4] = {1, -1, 0, 0};
-        
+        int time = 0;
         while(!q.empty()){
-            int len = q.size();
-            while(len--){
-                int x = q.front().first;
-                int y = q.front().second;
-            
+            int n = q.size();
+            for(int i=0; i<n; i++){
+                auto it = q.front();
+                int x = it.first;
+                int y = it.second;
                 q.pop();
-                for(int i=0; i<4; i++){
-                    int nx = x+dx[i];
-                    int ny = y+dy[i];
-                    if((isValid(x+dx[i], y+dy[i], grid)) && grid[nx][ny]==1){
-                        fresh--;
-                        grid[nx][ny] = 2;
-                        q.push({nx, ny});
-                    }
+                
+                if(isValid(x+1, y, grid) && grid[x+1][y]==1){
+                    grid[x+1][y] = 2;
+                    q.push({x+1, y});
+                }
+                if(isValid(x-1, y, grid) && grid[x-1][y]==1){
+                    grid[x-1][y] = 2;
+                    q.push({x-1, y});
+                }
+                if(isValid(x, y+1, grid) && grid[x][y+1]==1){
+                    grid[x][y+1] = 2;
+                    q.push({x, y+1});
+                }
+                if(isValid(x, y-1, grid) && grid[x][y-1]==1){
+                    grid[x][y-1] = 2;
+                    q.push({x, y-1});
                 }
             }
-            
-            if(!q.empty()){
-                ans++;
+            if(!q.empty())
+                time++;
+        }
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]==1){
+                    return -1;
+                }
             }
         }
-        if(fresh == 0)
-            return ans;
-        return -1;
+        return time;
     }
 };
