@@ -35,17 +35,11 @@ class Solution{
                 
             }
             mp2[str[j]]++;
-            while(uni >= cnt){
+            while(uni == cnt){
                 mp2[str[i]]--;
-                
-                
-                
-                
-                
                 int len1 = j-i+1;
                 if(len1<len && uni==cnt){
-                    len = len1;
-                    
+                    len = len1;    
                 }
                 if(mp2[str[i]]==0){
                     uni--;
