@@ -9,29 +9,19 @@ class Solution{
 public:	
 	int matSearch (vector <vector <int>> &mat, int N, int M, int X)
 	{
-	     int i=0; int j=M-1; 
-
-        while(i<N and j>=0)
-
-        {
-
-            int temp=mat[i][j]; 
-
-            if(temp<X)
-
-            i++; 
-
-            else if(temp>X)
-
-            j--;
-
-            else if(temp==X)
-
-            return 1; 
-
+	     for(int i=0; i<N; i++){
+	        if(mat[i][M-1]==X)
+	        return 1;
+        if(mat[i][M-1]>X){
+            
+            if(mat[i][lower_bound(mat[i].begin(), mat[i].end(), X)-mat[i].begin()] == X){
+                return 1;
+            }
+            
         }
-
-        return 0;
+    }
+    
+    return 0;
 	}
 };
 
