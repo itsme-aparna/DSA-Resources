@@ -9,7 +9,7 @@ public:
             sum += beans[i];
         }
         
-        long long ans = 99999999999999;
+        long long ans = LONG_MAX;
         for(long long i=0; i<beans.size(); i++){
             ans = min(ans, sum - beans[i]*(i+1));
         }
