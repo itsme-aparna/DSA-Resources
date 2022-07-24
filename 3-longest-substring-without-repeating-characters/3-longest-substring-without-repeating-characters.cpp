@@ -6,7 +6,6 @@ public:
         int curr = 0;
         for(int i=0; i<s.length(); i++){
             if(mp.find(s[i])!= mp.end()){
-                ans = max(ans, curr);
                 
                 curr = 0;
                 i= mp[s[i]];
