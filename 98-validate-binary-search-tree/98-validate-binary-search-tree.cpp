@@ -11,20 +11,20 @@
  */
 class Solution {
 public:
-    bool checkForRange(TreeNode* root, long max, long min){
-        if(root == NULL)
+    bool validate(TreeNode* root, long max, long min){
+        if(root==NULL)
             return true;
-        if(root->val >= max || root->val <= min){
+        
+        if(root->val >= max || root->val<=min){
             return false;
-            
         }
-        return checkForRange(root->right, max, root->val) && checkForRange(root->left, root->val, min);
+        
+        return validate(root->left, root->val, min) && validate(root->right, max, root->val);
     }
     
     bool isValidBST(TreeNode* root) {
         if(root==NULL)
-            return true;
-        return checkForRange(root, LONG_MAX, LONG_MIN);
-        
+            return NULL;
+        return validate(root, LONG_MAX, LONG_MIN);
     }
 };
